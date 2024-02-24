@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 // import { Configuration, OpenAIApi } from "openai";
 import OpenAIApi from "openai";
 
+import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
+
 const openai = new OpenAIApi({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -32,11 +34,19 @@ const openai = new OpenAIApi({
       if (!messages) {
         return new NextResponse("Messages are required", { status: 400 });
       }
+
+      const freeTrial = await checkApiLimit();
+
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
+    }
   
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages
       });
+
+      await incrementApiLimit();
   
       return NextResponse.json(response.choices[0].message);
     } catch (error) {

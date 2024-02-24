@@ -7,6 +7,7 @@ import { Code, LayoutDashboard, MessageSquare, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { FreeCounter } from "@/components/free-counter";
 
 const poppins = Montserrat ({ weight: '600', subsets: ['latin'] });
 
@@ -30,7 +31,13 @@ const routes = [
       },
 ];
 
-const Sidebar = () => {
+
+
+export const Sidebar = ({
+  apiLimitCount = 0,
+}: {
+  apiLimitCount: number;
+}) => {
   const pathname = usePathname();
     return (
       <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
@@ -61,8 +68,9 @@ const Sidebar = () => {
           ))}
         </div>
         </div>
+        <FreeCounter 
+        apiLimitCount={apiLimitCount}
+      />
       </div>
     );
-}
-
-export default Sidebar;
+};
