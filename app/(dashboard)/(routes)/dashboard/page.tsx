@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight, FileSearch, MessageSquare, NotebookPen } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
@@ -8,9 +8,16 @@ import { cn } from "@/lib/utils";
 
 const tools = [
   {
-    label: 'Conversation',
-    icon: MessageSquare,
+    label: 'Search',
+    icon: FileSearch,
     href: '/conversation',
+    color: "text-violet-500",
+    bgColor: "bg-violet-500/10",
+  },
+  {
+    label: 'Notes',
+    icon: NotebookPen,
+    href: '/notes',
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
   },
@@ -22,10 +29,10 @@ const DashBoardPage = () => {
     <div>
        <div className="mb-8 space-y-4">
         <h2 className="text-2xl md:text-4xl font-bold text-center">
-          Explore the power of AI
+        Experience the power of AI Powered Clinical Tool
         </h2>
         <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-          Chat with the smartest AI - Experience the power of AI
+          Chat with the smartest medical AI
         </p>
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-4">

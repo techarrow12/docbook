@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Montserrat } from 'next/font/google'
-import { Code, LayoutDashboard, MessageSquare, Settings } from "lucide-react";
+import { FileSearch, LayoutDashboard, NotebookPen, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -19,9 +19,15 @@ const routes = [
       color: "text-sky-500"
     },
     {
-        label: 'Conversation',
-        icon: MessageSquare,
+        label: 'Search',
+        icon: FileSearch,
         href: '/conversation',
+        color: "text-violet-500",
+      },
+      {
+        label: 'Notes',
+        icon: NotebookPen,
+        href: '/notes',
         color: "text-violet-500",
       },
       {
@@ -49,7 +55,7 @@ export const Sidebar = ({
             <Image fill alt="Logo" src="/logo.png" />
           </div>
           <h1 className={cn("text-2xl font-bold", poppins.className)}>
-            DocSearch
+            DocBook
           </h1>
         </Link>
         <div className="space-y-1">

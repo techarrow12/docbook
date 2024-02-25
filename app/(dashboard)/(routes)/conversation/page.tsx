@@ -3,7 +3,7 @@
 import * as z from "zod";
 import axios from "axios";
 import { Heading } from "@/components/heading";
-import { MessageSquare } from "lucide-react";
+import { FileSearch, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { formSchema } from "./constants";
@@ -57,9 +57,9 @@ const ConversationPage = () => {
 
     return (
       <div>
-        <Heading title="Conversation"
-        description="Our most advanced conversation model."
-        icon={MessageSquare}
+        <Heading title="Universal Clinical Search"
+        description="Our most advanced search model."
+        icon={FileSearch}
         iconColor="text-violet-500"
         bgColor="bg-violet-500/10"
         />
