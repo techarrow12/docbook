@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import OpenAIApi from "openai";
 
 import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 
 const openai = new OpenAIApi({
   apiKey: process.env.OPENAI_API_KEY,
@@ -21,7 +22,7 @@ const openai = new OpenAIApi({
     try {
       const { userId } = auth();
       const body = await req.json();
-      const { messages  } = body;
+      let { messages } = body;
   
       if (!userId) {
         return new NextResponse("Unauthorized", { status: 401 });
@@ -36,15 +37,27 @@ const openai = new OpenAIApi({
       }
 
       const freeTrial = await checkApiLimit();
+      const isPro = await checkSubscription();
 
-    if (!freeTrial) {
+    if (!freeTrial && !isPro) {
       return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
     }
+
+    // Including a prompt that guides GPT to behave as a clinical assistant
+    messages = [
+      ...messages,
+      { role: "system", content: "You are a highly knowledgeable clinical assistant. Provide accurate, concise medical information and include a reference link in your response." },
+    ];
+
   
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages
       });
+
+      if (!isPro) {
+        await incrementApiLimit();
+      }
 
       await incrementApiLimit();
   
